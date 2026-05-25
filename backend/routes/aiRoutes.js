@@ -79,72 +79,80 @@
 
 
 
-
-
-
-
-
-
 const express = require("express");
 
 const router = express.Router();
 
-router.post("/generate-description", async (req, res) => {
-  try {
-    const { title, category } = req.body;
+router.post("/generate-description", async(req,res)=>{
 
-    // Basic validation
-    if (!title || !category) {
-      return res.status(400).json({
-        message: "Title and category are required"
-      });
-    }
+try{
 
-    // Templates
-    const descriptions = [
-      `${title} is a premium ${category} product crafted with high-quality materials.`,
-      `Upgrade your lifestyle with ${title}. This ${category} product delivers comfort and efficiency.`,
-      `${title} combines stylish design with powerful functionality for everyday use.`,
-      `Experience innovation with ${title}, designed for modern users.`,
-      `${title} offers excellent performance and long-lasting durability.`
-    ];
+const {title,category}=req.body;
 
-    const captions = [
-      `🔥 Trending now: ${title}`,
-      `✨ Upgrade your experience with ${title}`,
-      `🚀 Discover premium quality with ${title}`,
-      `⭐ Customer favorite: ${title}`,
-      `💥 Best choice for smart buyers`
-    ];
+const descriptions=[
 
-    // Random selection
-    const randomDescription =
-      descriptions[Math.floor(Math.random() * descriptions.length)];
+`${title} is a premium ${category} product crafted with high quality materials.`,
 
-    const randomCaption =
-      captions[Math.floor(Math.random() * captions.length)];
+`Upgrade your lifestyle with ${title}. This ${category} product delivers comfort and efficiency.`,
 
-    // Smarter tags
-    const tags = [
-      title.toLowerCase(),
-      category.toLowerCase(),
-      `${category}-product`,
-      "premium",
-      "trending",
-      "bestseller"
-    ];
+`${title} combines stylish design with powerful functionality.`,
 
-    res.json({
-      description: randomDescription,
-      caption: randomCaption,
-      tags
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      message: "Failed to generate content"
-    });
-  }
+`Experience innovation with ${title}, designed for modern users.`,
+
+`${title} offers excellent performance and long-lasting quality.`
+
+];
+
+const captions=[
+
+`🔥 Trending now: ${title}`,
+
+`✨ Upgrade your experience with ${title}`,
+
+`🚀 Discover premium quality with ${title}`,
+
+`⭐ Customer favorite product`,
+
+`💥 Best choice for smart buyers`
+
+];
+
+const randomDescription =
+descriptions[Math.floor(Math.random()*descriptions.length)];
+
+const randomCaption =
+captions[Math.floor(Math.random()*captions.length)];
+
+const tags=[
+
+title.toLowerCase(),
+category.toLowerCase(),
+"premium",
+"trending",
+"bestseller",
+"sale"
+
+];
+
+res.json({
+
+description:randomDescription,
+caption:randomCaption,
+tags
+
 });
 
-module.exports = router;
+}
+catch(error){
+
+console.log(error);
+
+res.status(500).json({
+message:"Generation failed"
+});
+
+}
+
+});
+
+module.exports = router; 
